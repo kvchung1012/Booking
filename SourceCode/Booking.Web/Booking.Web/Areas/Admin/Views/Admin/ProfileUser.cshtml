@@ -1,0 +1,97 @@
+﻿@model Booking.Model.Model.Admin
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="user-info">
+    <div class="row">
+        <form class="form-input col-lg-7 row">
+            <div class="col-6 col-md-3 avatar">
+                <h6 class="p-2 m-0 text-white" style="background:#3c4b64">Chọn ảnh</h6>
+                <img src="@Model.Image" class="w-100 show-image" alt="Alternate Text" onclick="ChooseMainImage(this)" />
+                <input type="text" name="Image" value="@Model.Image" hidden />
+            </div>
+            <div class="col-6 col-md-9">
+                <div class="title mb-3"><h6>Thông tin cá nhân</h6></div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label>User name</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="hidden" name="Id" class="form-control" value="@Model.Id" />
+                        <input type="text" name="UserName" class="form-control" value="@Model.UserName" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label>Họ và tên</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="text" name="Name" class="form-control" value="@Model.Name" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label>Số điện thoại</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="number" name="Phone" class="form-control" value="@Model.Phone" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label>Email</label>
+                    </div>
+                    <div class="col-md-9">
+                        <input type="email" name="Email" class="form-control" value="@Model.Email" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12 d-flex justify-content-end">
+                        <button class="btn btn-primary btn-save" type="button" onclick="AddOrUpdate(this,'/Admin/Admin/AddOrUpdate')">Cập nhật thông tin</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="col-6 col-lg-5">
+            <div class="title mb-3"><h6>Đổi mật khẩu</h6></div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label>Mật khẩu cũ</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="email" name="Email" class="form-control" value="" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label>Mật khẩu mới</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="email" name="Email" class="form-control" value="" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <label>Xác nhận mật khẩu</label>
+                </div>
+                <div class="col-md-9">
+                    <input type="email" name="Email" class="form-control" value="" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12 d-flex justify-content-end">
+                    <button class="btn btn-primary">Cập nhật thông tin</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Content/Admin/js/AdminCommon.js"></script>    
+}

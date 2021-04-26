@@ -1,0 +1,146 @@
+﻿@model Booking.Model.Model.TheLessor
+@if (Model == null)
+{
+    <form class="form-input">
+        <div class="row">
+            <div class="col-md-9 row">
+                <div class="form-group col-md-4">
+                    <input type="hidden" name="Id" id="Id" value="0">
+                    <label class="col-form-label">Họ và tên</label>
+                    <div>
+                        <input class="form-control validation" type="text" name="Name" placeholder="Nhập họ và tên">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label">Tài Khoản</label>
+                    <div>
+                        <input class="form-control validation" type="text" name="UserName" placeholder="Nhập tên tài khoản">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label">CCCD</label>
+                    <div>
+                        <input class="form-control validation" type="text" name="IdCard" placeholder="Căn cước công dân">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label" for="text-input">Email</label>
+                    <div>
+                        <input class="form-control validation" type="email" name="Email" placeholder="Nhập email">
+                        <span class="help-block">This is a help text</span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label" for="text-input">Nhập số điện thoại</label>
+                    <div>
+                        <input class="form-control validation" type="number" name="Phone" placeholder="Nhập số điện thoại">
+                        <span class="help-block">This is a help text</span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label" for="text-input">Địa chỉ</label>
+                    <div>
+                        <input class="form-control validation" type="text" name="Address" placeholder="Nhập địa chỉ">
+                        <span class="help-block">This is a help text</span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-form-label" for="text-input">Trạng thái</label>
+                    <div>
+                        <input id="Active" type="radio" name="Status" value="True" checked />
+                        <label class="col-form-label" for="Active">Hoạt động</label>
+                        <input class="ml-2" id="Lock" type="radio" name="Status" value="False" />
+                        <label class="col-form-label" for="Lock">Khóa</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+                <img src="~/Content/Upload/no-image.png" alt="Alternate Text" class="w-100 show-image" style="object-fit:contain" onclick="ChooseMainImage(this)" />
+                <input type="text" name="Image" value="~/Content/Upload/no-image.png" hidden />
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <form class="form-input">
+        <div class="row">
+            <div class="col-md-9 row">
+                <div class="form-group col-md-4">
+                    <input type="hidden" name="Id" id="Id" value="@Model.Id">
+                    <label class="col-form-label">Họ và tên</label>
+                    <div>
+                        <input class="form-control validation" value="@Model.Name" type="text" name="Name" placeholder="Nhập họ và tên">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label">Tài Khoản</label>
+                    <div>
+                        <input class="form-control validation" value="@Model.UserName" type="text" name="UserName" placeholder="Nhập tên tài khoản">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label">CCCD</label>
+                    <div>
+                        <input class="form-control validation" value="@Model.IdCard" type="text" name="IdCard" placeholder="Căn cước công dân">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label" for="text-input">Email</label>
+                    <div>
+                        <input class="form-control validation" type="email" value="@Model.Email" name="Email" placeholder="Nhập email">
+                        <span class="help-block">This is a help text</span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label" for="text-input">Nhập số điện thoại</label>
+                    <div>
+                        <input class="form-control validation" type="number" value="@Model.Phone" name="Phone" placeholder="Nhập số điện thoại">
+                        <span class="help-block">This is a help text</span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label" for="text-input">Địa chỉ</label>
+                    <div>
+                        <input class="form-control validation" type="text" name="Address" value="@Model.Address" placeholder="Nhập địa chỉ">
+                        <span class="help-block">This is a help text</span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-form-label" for="text-input">Trạng thái</label>
+                    <div>
+                        <input id="Active" type="radio" name="Status" value="True" @if (Model.Status == true) { <text> checked</text> } />
+                        <label class="col-form-label" for="Active">Hoạt động</label>
+                        <input class="ml-2" id="Lock" type="radio" name="Status" value="False" @if (Model.Status != true) { <text> checked</text> }/>
+                        <label class="col-form-label" for="Lock">Khóa</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <img src="@Model.Image" alt="Alternate Text" class="w-100 show-image" style="object-fit:contain" onclick="ChooseMainImage(this)" />
+                <input type="text" name="Image" value="@Model.Image" hidden />
+            </div>
+        </div>
+    </form>
+}

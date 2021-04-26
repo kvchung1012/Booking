@@ -1,0 +1,122 @@
+﻿@model Booking.Model.ModelView.ResponseData<Booking.Model.ModelView.DestinationModelView>
+<table class="table table-hover table-hover bg-white">
+    <thead class="table">
+        <tr>
+            <th data-name="Name" data-sort="@Model.isAsc" data-order="@Model.orderBy">
+                <i class="bi bi-arrow-down-up"></i> Tên địa danh
+            </th>
+            <th data-name="Name" data-sort="@Model.isAsc" data-order="@Model.orderBy">
+                <i class="bi bi-arrow-down-up"></i> Thuộc huyện
+            </th>
+            <th data-name="UserName" data-sort="@Model.isAsc" data-order="@Model.orderBy">
+                <i class="bi bi-arrow-down-up"></i> Ngày tạo
+            </th>
+            <th data-name="IdCard" data-sort="@Model.isAsc" data-order="@Model.orderBy">
+                <i class="bi bi-arrow-down-up"></i> Ngày cập nhật
+            </th>
+            <th class="width-120">Trạng Thái</th>
+            <th class="width-150">Tác Vụ</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.data)
+        {
+        <tr>
+            <td>@item.destination.Name</td>
+            <td>@item.district</td>
+            <td> @item.destination.CreatedDate.Value.ToString("dd/MM/yyyy")</td>
+            @if (item.destination.UpdatedDate != null)
+            {
+                <td> @item.destination.UpdatedDate.Value.ToString("dd/MM/yyyy")</td>
+            }
+            else
+            {
+                <td></td>
+            }
+            <td>
+                @if (item.destination.Status == true)
+                {
+                    <span class="badge badge-success">Hoạt động</span>
+                }
+                else
+                {
+                    <span class="badge badge-danger">Khóa</span>
+                }
+            </td>
+            <td class="width-150">
+                <button class=" btn btn-sm btn-square btn-info"><i class="bi bi-info-circle"></i></button>
+                <button class=" btn btn-sm btn-square btn-warning text-white" onclick="GetFormAddOrEdit('/Admin/DestinationPlace/GetFormAddOrEdit',@item.destination.Id)"><i class="bi bi-calendar2-event"></i></button>
+                <button class=" btn btn-sm btn-square btn-danger" onclick="DeleteById('/Admin/DestinationPlace/DeleteById',@item.destination.Id)"><i class="bi bi-trash"></i></button>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<ul class="pagination justify-content-end">
+    @if (Model.pageCount <= 4)
+    {
+        for (int index = 1; index <= Model.pageCount; index++)
+        {
+            if (index == Model.pageNumber)
+            {
+                <li class="page-item active"><a class="page-link" data-index="@index">@index</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a class="page-link" data-index="@index">@index</a></li>
+            }
+        }
+    }
+    else
+    {
+        if (Model.pageNumber <= 2)
+        {
+            for (int index = 1; index <= 4; index++)
+            {
+                if (index == Model.pageNumber)
+                {
+                    <li class="page-item active"><a class="page-link" data-index="@index">@index</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" data-index="@index">@index</a></li>
+                }
+            }
+            <li class="page-item"><a class="page-link nextPage" data-index="@Model.pageCount">Next</a></li>
+        }
+        else if (Model.pageNumber >= Model.pageCount - 2)
+        {
+            <li class="page-item"><a class="page-link prevPage" data-index="1">Prev</a></li>
+
+            for (int index = Model.pageCount - 3; index <= Model.pageCount; index++)
+            {
+                if (index == Model.pageNumber)
+                {
+                    <li class="page-item active"><a class="page-link" data-index="@index">@index</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" data-index="@index">@index</a></li>
+                }
+            }
+        }
+        else
+        {
+            <li><a class="page-link prevPage" data-index="1">Prev</a></li>
+            for (int index = Model.pageNumber - 1; index <= Model.pageNumber + 2; index++)
+            {
+                if (index == Model.pageNumber)
+                {
+                    <li class="page-item active"><a class="page-link" data-index="@index">@index</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a class="page-link" data-index="@index">@index</a></li>
+                }
+            }
+            <li class="page-item"><a class="page-link nextPage" data-index="@Model.pageCount">Next</a></li>
+        }
+    }
+</ul>

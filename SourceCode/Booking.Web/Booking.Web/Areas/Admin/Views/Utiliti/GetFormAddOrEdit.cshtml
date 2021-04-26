@@ -1,0 +1,82 @@
+﻿@model Booking.Model.Model.Utiliti
+@if (Model == null)
+{
+    <form class="form-input">
+        <div class="row">
+            <div class="col-md-9 row">
+                <div class="form-group col-md-4">
+                    <input type="hidden" name="Id" id="Id" value="0">
+                    <input type="hidden" name="ParentId" value="@ViewBag.parentId">
+                    <label class="col-form-label">Tên</label>
+                    <div>
+                        <input class="form-control validation" type="text" name="Name" placeholder="Nhập tiêu đề">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label">Tên phụ</label>
+                    <div>
+                        <input class="form-control validation" type="text" name="SubName" placeholder="Nhập tiêu đề">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-form-label" for="text-input">Trạng thái</label>
+                    <div>
+                        <input id="Active" type="radio" name="Status" value="True" checked />
+                        <label class="col-form-label" for="Active">Hoạt động</label>
+                        <input class="ml-2" id="Lock" type="radio" name="Status" value="False" />
+                        <label class="col-form-label" for="Lock">Khóa</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <img src="~/Content/Upload/no-image.png" alt="Alternate Text" class="w-100 show-image" style="object-fit:contain" onclick="ChooseMainImage(this)" />
+                <input type="text" name="Image" value="~/Content/Upload/no-image.png" hidden />
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <form class="form-input">
+        <div class="row">
+            <div class="col-md-9 row">
+                <div class="form-group col-md-4">
+                    <input type="hidden" name="Id" id="Id" value="@Model.Id">
+                    <input type="hidden" name="ParentId" id="Id" value="@ViewBag.parentId">
+                    <label class="col-form-label">Họ và tên</label>
+                    <div>
+                        <input class="form-control validation" value="@Model.Name" type="text" name="Name" placeholder="Nhập tiêu đề">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="col-form-label">Tài Khoản</label>
+                    <div>
+                        <input class="form-control validation" value="@Model.SubName" type="text" name="SubName" placeholder="Nhập tiêu đề phụ">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-form-label" for="text-input">Trạng thái</label>
+                    <div>
+                        <input id="Active" type="radio" name="Status" value="True" @if (Model.Status == true) { <text> checked</text> } />
+                        <label class="col-form-label" for="Active">Hoạt động</label>
+                        <input class="ml-2" id="Lock" type="radio" name="Status" value="False" @if (Model.Status != true) { <text> checked</text> }/>
+                        <label class="col-form-label" for="Lock">Khóa</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <img src="@Model.Image" alt="Alternate Text" class="w-100 show-image" style="object-fit:contain" onclick="ChooseMainImage(this)" />
+                <input type="text" name="Image" value="@Model.Image" hidden />
+            </div>
+        </div>
+    </form>
+}

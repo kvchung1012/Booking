@@ -1,0 +1,15 @@
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\obj\Debug\Booking.Service.csprojAssemblyReference.cache
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\obj\Debug\Booking.Service.csproj.CoreCompileInputs.cache
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\bin\Debug\Booking.Service.dll.config
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\bin\Debug\Booking.Service.dll
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\bin\Debug\Booking.Service.pdb
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\bin\Debug\Booking.Model.dll
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\bin\Debug\EntityFramework.dll
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\bin\Debug\Booking.Model.pdb
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\bin\Debug\Booking.Model.dll.config
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\bin\Debug\EntityFramework.xml
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\obj\Debug\Booking.Service.csproj.CopyComplete
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\obj\Debug\Booking.Service.dll
+C:\Users\Delll\source\repos\Booking.Web\Booking.Service\obj\Debug\Booking.Service.pdb

@@ -1,0 +1,94 @@
+﻿@model Booking.Model.Model.ItemInRoom
+@if (Model == null)
+{
+    <form class="form-input">
+        <div class="row">
+            <div class="col-md-9 row">
+                <div class="form-group col-md-6">
+                    <input type="hidden" name="Id" id="Id" value="0">
+                    <label class="col-form-label">Tên đồ dùng</label>
+                    <div>
+                        <input class="form-control validation" type="text" name="Name" placeholder="Nhập họ và tên">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="col-form-label">Chọn đơn vị</label>
+                    <div>
+                        <select class="form-control validation" name="UnitId">
+                            <option value="0">---Chọn thành phố/tỉnh---</option>
+                            @foreach (var item in ViewBag.unit as IEnumerable<Booking.Model.Model.Unit>)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-form-label" for="text-input">Trạng thái</label>
+                    <div>
+                        <input id="Active" type="radio" name="Status" value="True" checked />
+                        <label class="col-form-label" for="Active">Hoạt động</label>
+                        <input class="ml-2" id="Lock" type="radio" name="Status" value="False" />
+                        <label class="col-form-label" for="Lock">Khóa</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+                <img src="~/Content/Upload/no-image.png" alt="Alternate Text" class="w-100 show-image" style="object-fit:contain" onclick="ChooseMainImage(this)" />
+                <input type="text" name="Image" value="~/Content/Upload/no-image.png" hidden />
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <form class="form-input">
+        <div class="row">
+            <div class="col-md-9 row">
+                <div class="form-group col-md-4">
+                    <input type="hidden" name="Id" id="Id" value="@Model.Id">
+                    <label class="col-form-label">Họ và tên</label>
+                    <div>
+                        <input class="form-control validation" value="@Model.Name" type="text" name="Name" placeholder="Nhập họ và tên">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="col-form-label">Chọn đơn vị</label>
+                    <div>
+                        <select class="form-control validation" name="UnitId">
+                            <option value="0">---Chọn thành phố/tỉnh---</option>
+                            @foreach (var item in ViewBag.unit as IEnumerable<Booking.Model.Model.Unit>)
+                            {
+                                <option value="@item.Id" @if (item.Id == Model.UnitId) {<text>selected</text> }>@item.Name</option>
+                            }
+                        </select>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-form-label" for="text-input">Trạng thái</label>
+                    <div>
+                        <input id="Active" type="radio" name="Status" value="True" @if (Model.Status == true) { <text> checked</text> } />
+                        <label class="col-form-label" for="Active">Hoạt động</label>
+                        <input class="ml-2" id="Lock" type="radio" name="Status" value="False" @if (Model.Status != true) { <text> checked</text> }/>
+                        <label class="col-form-label" for="Lock">Khóa</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <img src="@Model.Image" alt="Alternate Text" class="w-100 show-image" style="object-fit:contain" onclick="ChooseMainImage(this)" />
+                <input type="text" name="Image" value="@Model.Image" hidden />
+            </div>
+        </div>
+    </form>
+}

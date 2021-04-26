@@ -1,0 +1,122 @@
+﻿@model Booking.Model.Model.DestinationPlace
+@{
+    var province = ViewBag.province as IEnumerable<Booking.Model.Model.Province>;
+}
+@if (Model == null)
+{
+    <form class="form-input">
+        <div class="row">
+            <div class="col-md-9 row">
+                <div class="form-group col-md-12">
+                    <input type="hidden" name="Id" id="Id" value="0">
+                    <label class="col-form-label">Tên địa danh</label>
+                    <div>
+                        <input class="form-control validation" type="text" name="Name" placeholder="Nhập tên địa danh">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="col-form-label">Chọn thành phố/tỉnh</label>
+                    <div>
+                        <select class="form-control validation" name="ProvinceId" onchange="ChangeSelectProvince(this)">
+                            <option value="0">---Chọn thành phố/tỉnh---</option>
+                            @foreach (var item in province)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="col-form-label">Chọn quận/huyện</label>
+                    <div>
+                        <select class="form-control validation" name="DistrictId">
+                            <option value="0">---Chọn quận/huyện---</option>
+                        </select>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-form-label" for="text-input">Trạng thái</label>
+                    <div>
+                        <input id="Active" type="radio" name="Status" value="True" checked />
+                        <label class="col-form-label" for="Active">Hoạt động</label>
+                        <input class="ml-2" id="Lock" type="radio" name="Status" value="False" />
+                        <label class="col-form-label" for="Lock">Khóa</label>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-3">
+                <img src="~/Content/Upload/no-image.png" alt="Alternate Text" class="w-100 show-image" style="object-fit:contain" onclick="ChooseMainImage(this)" />
+                <input type="text" name="Image" value="~/Content/Upload/no-image.png" hidden />
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <form class="form-input">
+            <div class="row">
+                <div class="col-md-9 row">
+                    <div class="form-group col-md-12">
+                        <input type="hidden" name="Id" id="Id" value="@Model.Id">
+                        <label class="col-form-label">Họ và tên</label>
+                        <div>
+                            <input class="form-control validation" value="@Model.Name" type="text" name="Name" placeholder="Nhập họ và tên">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="col-form-label">Chọn thành phố/tỉnh</label>
+                        <div>
+                            <select class="form-control validation" name="ProvinceId" onchange="ChangeSelectProvince(this)">
+                                <option value="0">---Chọn thành phố/tỉnh---</option>
+                                @foreach (var item in province)
+                                {
+                                    <option value="@item.Id" @if (item.Id == Model.ProvinceId) {<text>selected</text> }>@item.Name</option>
+                                }
+                            </select>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="col-form-label">Chọn quận/huyện</label>
+                        <div>
+                            <select class="form-control validation" name="DistrictId">
+                                <option value="0">---Chọn quận/huyện---</option>
+                                @foreach (var item in ViewBag.district as IEnumerable<Booking.Model.Model.District>)
+                                {
+                                    <option value="@item.Id"  @if (item.Id == Model.DistrictId) {<text>selected</text> }>@item.Name</option>
+                                }
+                            </select>
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-12">
+                        <label class="col-form-label" for="text-input">Trạng thái</label>
+                        <div>
+                            <input id="Active" type="radio" name="Status" value="True" @if (Model.Status == true) { <text> checked</text> } />
+                            <label class="col-form-label" for="Active">Hoạt động</label>
+                            <input class="ml-2" id="Lock" type="radio" name="Status" value="False" @if (Model.Status != true) { <text> checked</text> } />
+                            <label class="col-form-label" for="Lock">Khóa</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <img src="@Model.Image" alt="Alternate Text" class="w-100 show-image" style="object-fit:contain" onclick="ChooseMainImage(this)" />
+                    <input type="text" name="Image" value="@Model.Image" hidden />
+                </div>
+            </div>
+        </form>
+}
