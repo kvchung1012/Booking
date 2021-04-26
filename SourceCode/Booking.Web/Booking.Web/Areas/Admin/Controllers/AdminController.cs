@@ -127,6 +127,20 @@ namespace Booking.Web.Areas.Admin.Controllers
             return Json(response);
         }
 
+        public async Task<PartialViewResult> GetViewDetail(int Id)
+        {
+            var obj = await _adminService.GetObjectById(Id);
+            var createBy = (await _adminService.GetObjectById((int)obj.CreatedBy)).Name;
+            var updateBy = (await _adminService.GetObjectById((int)obj.UpdatedBy)).Name;
+            var response = new ViewDetailObject<Booking.Model.Model.Admin>()
+            {
+                obj = obj,
+                CreatedBy = createBy,
+                UpdatedBy = updateBy
+            };
+            return PartialView(response);
+        }
+
         [HttpPost]
         public async Task<JsonResult> AddOrUpdate(Booking.Model.Model.Admin obj)
         {
