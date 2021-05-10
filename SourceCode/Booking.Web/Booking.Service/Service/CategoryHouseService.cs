@@ -18,7 +18,7 @@ namespace Booking.Service.Service
         }
         public async Task<bool> AddOrUpdate(CategoryHouse category)
         {
-            var response = await _commonService.AddOrUpdate(category);
+            var response = (await _commonService.AddOrUpdate(category)).isSuccess;
             return response;
         }
 

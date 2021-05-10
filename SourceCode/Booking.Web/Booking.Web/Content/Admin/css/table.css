@@ -107,3 +107,23 @@ button{
     color:red;
     display:none;
 }
+
+.select2-selection--multiple, .select2-selection--single {
+    height: calc(1.5em + 0.75rem + 2px) !important;
+    border-color: #d8dbe0 !important;
+    border-radius: 0px !important;
+}
+.select2-search__field{
+    outline:none;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: calc(1.5em + 0.75rem + 2px) !important;
+}
+.select2-container--default {
+    width: 100% !important;
+}
+.select2-selection__choice {
+    color: #fff !important;
+    background-color: #2eb85c !important;
+    border: none !important;
+}

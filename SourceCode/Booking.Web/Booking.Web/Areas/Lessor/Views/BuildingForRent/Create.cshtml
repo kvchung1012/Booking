@@ -1,0 +1,237 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Lessor/Views/Shared/_Layout.cshtml";
+}
+<style>
+    html {
+        box-sizing: border-box
+    }
+
+    .image-item {
+        position: relative;
+    }
+
+        .image-item button {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+    .select2-selection--multiple {
+        height: auto !important;
+    }
+</style>
+<div class="form-add">
+    <h5>Thêm mới nhà cho thuê</h5>
+    <form class="form-input">
+        <div class="row">
+            <div class="col-md-9 row">
+                <div class="form-group col-md-6">
+                    <label class="col-form-label">Tên khu nghỉ dưỡng</label>
+                    <div>
+                        <input type="hidden" name="Id" id="Id" value="0">
+                        <input class="form-control validation" type="text" name="Name" placeholder="Nhập tên khu nghỉ dưỡng của bạn">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-form-label">Số điện thoại</label>
+                    <div>
+                        <input class="form-control validation" type="text" name="Phone" placeholder="Nhập số điện thoại">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-form-label">Loại nghỉ dưỡng</label>
+                    <div>
+                        <select class="form-control validation" name="CategoryHouseId">
+                            <option value="0">Chọn loại khu nghỉ dưỡng</option>
+                            @foreach (var item in ViewBag.categoryHouse as IEnumerable<Booking.Model.Model.CategoryHouse>)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="col-form-label">Nơi nghỉ dưỡng của bạn</label>
+                    <div>
+                        <select class="form-control validation" name="DestinationHouseId">
+                            <option value="0">Chọn nơi nghỉ dưỡng</option>
+                            @foreach (var item in ViewBag.destination as IEnumerable<Booking.Model.ModelView.DestinationModelView>)
+                            {
+                                <option value="@item.destination.Id">@item.destination.Name</option>
+                            }
+                        </select>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-form-label">Địa chỉ chi tiết</label>
+                    <div>
+                        <input class="form-control validation" type="text" name="Address" placeholder="Nhập địa chỉ khu nghỉ dưỡng của bạn">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <label class="col-form-label">Vị trí trên bản đồ</label>
+                    <div>
+                        <input class="form-control validation" type="text" name="Position" placeholder="Lấy vị trí trên bản đồ dán vào đây">
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-form-label">Mô tả</label>
+                    <div>
+                        <textarea class="form-control validation" name="Description" rows="5"></textarea>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <label class="col-form-label">Nội dung chi tiết</label>
+                    <div>
+                        <textarea class="form-control validation ckeditor" rows="5" name="Content" id="Content"></textarea>
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" checked id="inline-radio1" type="radio" value="True" name="Status">
+                        <label class="form-check-label" for="inline-radio1">Hoạt động</label>
+                    </div>
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" id="inline-radio2" type="radio" value="False" name="Status">
+                        <label class="form-check-label" for="inline-radio2">Khóa</label>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <h5>Thêm các dịch vụ</h5>
+                    <select class="select-service form-control" multiple="multiple">
+                        @foreach (var item in ViewBag.utiliti as IEnumerable<Booking.Model.ModelView.UtilitiesModelView>)
+                        {
+                            <optgroup label="@item.utiliti.Name">
+                                @foreach (var c in item.utilities)
+                                {
+                                    <option value="@c.Id">@c.Name</option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-12 d-flex justify-content-end mt-3">
+                    <button type="button" class="btn btn-square btn-danger">Quay lại</button>
+                    <button type="button" class="btn btn-square btn-success ml-2" onclick="Add()">Thêm mới</button>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <img src="~/Content/Upload/no-image.png" alt="Alternate Text" class="w-100 border show-image" style="object-fit:contain" onclick="ChooseMainImage(this)" />
+                <input type="text" name="Image" value="~/Content/Upload/no-image.png" hidden />
+
+                <div class="list-image">
+                    <div class="d-flex flex-wrap h-100 mt-2">
+                    </div>
+                    <div class="mt-2">
+                        <button type="button" class="btn btn-square btn-success" onclick="ChooseImage()">Thêm ảnh</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section scripts{
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/Admin/js/AdminCommon.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('select').select2();
+        })
+        function Add() {
+            if (ValidationInput()) {  // kiểm tra dữ liệu đầu vào
+                // read data in form
+                let formArray = $('form.form-input').serializeArray();
+                var object = {};
+                jQuery.map(formArray, function (n, i) {
+                    object[n.name] = n.value;
+                });
+                $('.form-input textarea').each(function (index, item) {
+                    if ($(this).hasClass('ckeditor') || $(this).hasClass('ckeditor')) {
+                        let id = $(this).attr('id');
+                        object[$(this).attr('name')] = CKEDITOR.instances[id].getData();
+                    }
+                })
+
+                // get image
+                let images = [];
+                $('.list-image img').each(function (i, e) {
+                    let obj = {
+                        BuildingForRentId: 0,
+                        Image: $(e).attr('src')
+                    }
+                    images.push(obj);
+                })
+
+                // get list utiliti
+                let utilities = [];
+                let services = $('.select-service').val();
+                $(services).each(function (index, item) {
+                    let utiliti = {
+                        Id: 0,
+                        BuildingForRentId: 0,
+                        UtilitiId: item
+                    };
+                    utilities.push(utiliti);
+                })
+                console.log(utilities);
+                swal({
+                    title: $('#Id').val() == 0 ? "Bạn có chắc chắn muốn thêm" : "Bạn có chắc muốn sửa dữ liệu này?",
+                    text: $('#Id').val() == 0 ? "" : "Sau khi sửa thì không thể quay lại!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: '/Lessor/BuildingForRent/AddOrUpdate',
+                            type: 'post',
+                            dataType: 'json',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                obj: object,
+                                images: images,
+                                utilities: utilities
+                            }),
+                            beforeSend: function () {
+                            },
+                            success: function (res) {
+                                if (res.success) {
+                                    alert("ok")
+                                }
+                                else {
+                                    if (res.error != null) {
+                                        $('.help-block').css('display', 'inline-block');
+                                        res.error.map(x => {
+                                            $('.form-input input[name=' + x.key + ']').siblings('.help-block').html('');
+                                            $('.form-input input[name=' + x.key + ']').siblings('.help-block').append(x.value);
+                                        })
+                                    }
+                                }
+                            },
+                            error: function (error) {
+
+                            },
+                            complete: function () {
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    </script>
+}

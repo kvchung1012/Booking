@@ -15,6 +15,6 @@ namespace Booking.Service.IService
         public Task<bool> AddOrUpdate(Admin admin);
         public Task<bool> DeleteById(int Id);
         public Task<Admin> Login(string email, string password);
-        public Task<bool> ForgotPassword(string email);
+        public Task<bool> ForgotPassword(string email,string pass);
     }
 }

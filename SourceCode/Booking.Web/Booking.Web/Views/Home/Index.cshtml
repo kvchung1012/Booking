@@ -1,31 +1,705 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    var category = ViewBag.categoryhouse as IEnumerable<Booking.Model.Model.CategoryHouse>;
+    var destination = ViewBag.destination as IEnumerable<Booking.Model.ModelView.DestinationPlaceModelView>;
 }
+<style>
+    .select2-selection--single {
+        outline: none !important;
+        height: 62px !important;
+        border: 1px solid #bdbdbd !important;
+        border-radius: 10px !important;
+    }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    .select2-selection__rendered {
+        line-height: 62px !important;
+        text-align: start;
+    }
+
+    .select2-search__field {
+        outline: none;
+    }
+</style>
+<div class="main">
+    <div class="img-banner">
+        <img src="~/Content/FrontEnd/img/bg-agoda.png" alt="banner">
+    </div>
+    <div class="title-containner">
+        <div class="welcome-message">
+            <h4 class="welcome-message-up">KHÁCH SẠN, KHU NGHỈ DƯỠNG, NHÀ TRỌ & HƠN THẾ NỮA</h4>
+            <h5 class="welcome-message-down">Nhận giá tốt nhất cho >2.000.000 chỗ nghỉ, trên toàn cầu</h5>
+        </div>
+        <div class="utilities">
+            <div class="category">
+                <ul>
+                    @{
+                        int check = 0;
+                    }
+                    @foreach (var item in category)
+                    {
+                        if (check == 0)
+                        {
+                            check++;
+                            <li class="choose-cate">
+                                <button class="btn-hotel-home active" data-id=" @item.Id">
+                                    <i class="fas fa-hotel"></i>
+                                    <h6>@item.Name</h6>
+                                </button>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="choose-cate">
+                                <button class="btn-hotel-home" data-id=" @item.Id">
+                                    <i class="fas fa-hotel"></i>
+                                    <h6>@item.Name</h6>
+                                </button>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+            <div class="form-category form-hotel-home active-form" id="form-1">
+                <select class="form-control destination">
+                    <option value="0">Bạn muốn du lịch nơi đâu</option>
+                    @foreach (var item in ViewBag.selectDestination as IEnumerable<Booking.Model.Model.DestinationPlace>)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+                <div class="choice d-sm-block d-lg-flex d-block">
+                    <div class="check col-lg-6 col-sm-12 col-12 pe-1 mt-3">
+                        <div class="check-in col-6">
+                            <label for="startdate">
+                                <i class="far fa-calendar-check"></i>
+                            </label>
+                            <!-- <input type="date" id=start-date> -->
+                            <div class="check-in-child">
+                                <!-- <div class="check-in-time">
+                                    <h6>16 tháng 4 2021</h6>
+                                </div>
+                                <div class="check-in-date">
+                                    <p>Thứ Sáu</p>
+                                </div> -->
+                                <input type="text" id="startdate" placeholder="Ngày đến" autocomplete="off">
+                            </div>
+                        </div>
+                        <!-- <input type="date" id="startdate"> -->
+                        <div class="check-out col-6">
+                            <label for="enddate">
+                                <i class="far fa-calendar-check"></i>
+                            </label>
+                            <div class="check-out-child">
+                                <!-- <div class="check-out-time">
+                                    <h6>23 tháng 4 2021</h6>
+                                </div>
+                                <div class="check-in-date">
+                                    <p>Thứ Sáu</p>
+                                </div> -->
+                                <input type="text" id="enddate" placeholder="Ngày đi" autocomplete="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="occupancy col-lg-6 col-sm-12 col-12 ps-lg-2 mt-3">
+                        <div class="occupancy-order">
+                            <i class="fas fa-user-friends"></i>
+                            <div class="occupancy-child">
+                                <h6 class="amount-people-room"><span class="number-adults">1</span> người</h6>
+                            </div>
+                            <div class="up-content">
+                                <button class="btn-up"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                        </div>
+                        <div class="guests-room">
+                            <div class="guest-adult d-flex p-3">
+                                <p>Người lớn</p>
+                                <div class="increase-decrease d-flex justify-content-end">
+                                    <button class="decrease-adult me-1"><span>-</span></button>
+                                    <input type="number" class="adultsVal" value="1" min="1" readonly>
+                                    <button class="increase-adult ms-1"><span>+</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-seach">
+                    <button onclick="GetRoom()">Tìm phòng của bạn</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="VN-famous-place mb-5">
+    <p class="title-hot-place d-flex justify-content-center" style="font-size: 1.38rem;
+        font-weight: 500;">Các điểm đến thu hút nhất Việt Nam</p>
+    <div class="container-fluid">
+        <div class="row slider">
+            @foreach (var item in destination)
+            {
+                <div class="col-12 place-items p-2">
+                    <a href="/">
+                        <div class="img-VN-place">
+                            <img src="@item.destination.Image" alt="@item.destination.Name">
+                        </div>
+                        <div class="info-VN-place">
+                            <p class="place-name">@item.destination.Name</p>
+                            <p class="place-number">@item.buildings.Count() chỗ ở</p>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="attractive-addr container mb-5">
+    <p>Khám phá thêm nhà cho thuê du lịch</p>
+    <div class="row d-flex mt-3">
+        @foreach (var item in ViewBag.category as IEnumerable<Booking.Model.ModelView.CategoryHouseModelView>)
+        {
+            <div class="home col-lg-3 col-sm-6 p-2">
+                <a href="/">
+                    <div class="home-1">
+                        <img src="@item.category.Image" alt="">
+                        <h6>@item.category.Name</h6>
+                        <p>@item.buildings.Count() chỗ nghỉ</p>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+<div class="ht-location  container mb-5">
+    <p>Những chỗ nghỉ nổi bật khuyến nghị cho bạn:</p>
+    <div class="btn-ht-location">
+        <ul class="btn-ht-location-ul">
+            <li class="btn-HCM activity2" id="li1">
+                <button>
+                    <span>Hồ Chí Minh</span>
+                </button>
+            </li>
+            <li class="btn-VT" id="li2">
+                <button>
+                    <span>Vũng tàu</span>
+                </button>
+            </li>
+            <li class="btn-DL" id="li3">
+                <button>
+                    <span>Đà Lạt</span>
+                </button>
+            </li>
+            <li class="btn-DN" id="li4">
+                <button>
+                    <span>Đà Nẵng</span>
+                </button>
+            </li>
+            <li class="btn-HL" id="li5">
+                <button>
+                    <span>Hà Nội</span>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item HCM aclist iso-li1">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/home1.jpg" alt="">
+                    <div class="rating-point">
+                        <p>9.3</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>Angie's Home</p>
+                    </div>
+                    <div class="location-star mb-2">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Quận 4,Hồ Chí Minh</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt mb-1">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>1.181.818</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item HCM aclist iso-li1">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/home1.jpg" alt="">
+                    <div class="rating-point">
+                        <p>9.8</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>Angie's Home</p>
+                    </div>
+                    <div class="location-star">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Quận 4,Hồ Chí Minh</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>1.181.818</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item HCM aclist iso-li1">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/home1.jpg" alt="">
+                    <div class="rating-point">
+                        <p>8.8</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>Angie's Home</p>
+                    </div>
+                    <div class="location-star">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Quận 4,Hồ Chí Minh</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>1.181.818</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item HCM aclist iso-li1">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/home1.jpg" alt="">
+                    <div class="rating-point">
+                        <p>9.0</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>Chung cư studio 40 m² có 1 phòng tắm riêng ở Quận 1 (Apartment 5 stars + Pool infinity + View icon HCMC)</p>
+                    </div>
+                    <div class="location-star">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Quận 4,Hồ Chí Minh</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>1.181.818</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item HCM aclist iso-li1">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/home1.jpg" alt="">
+                    <div class="rating-point">
+                        <p>9.0</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>Angie's Home</p>
+                    </div>
+                    <div class="location-star mb-2">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Quận 4,Hồ Chí Minh</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt mb-1">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>1.181.818</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item HCM aclist iso-li1">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/home1.jpg" alt="">
+                    <div class="rating-point">
+                        <p>9.0</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>Angie's Home</p>
+                    </div>
+                    <div class="location-star">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Quận 4,Hồ Chí Minh</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>1.181.818</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item HCM aclist iso-li1">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/home1.jpg" alt="">
+                    <div class="rating-point">
+                        <p>9.0</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>Angie's Home</p>
+                    </div>
+                    <div class="location-star">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Quận 4,Hồ Chí Minh</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>1.181.818</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item VT iso-li2">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/LotusVT.jpg" alt="">
+                    <div class="rating-point">
+                        <p>8.5</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>Nhà Trệt DIC LOTUS Seaside (DIC LOTUS Seaside Bungalow)</p>
+                    </div>
+                    <div class="location-star">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Thắng Tam,Vũng Tàu</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>942.857</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item DL iso-li3">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/LaRoseDL.jpg" alt="">
+                    <div class="rating-point">
+                        <p>8.9</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>Nhà Dân La Rosee Đà Lạt (La Rosee Homestay Dalat)</p>
+                    </div>
+                    <div class="location-star">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Hồ Xuân Hương,Đà Lạt</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>942.857</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item DL iso-li3">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/LotusVT.jpg" alt="">
+                    <div class="rating-point">
+                        <p>8.5</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>Karry's House</p>
+                    </div>
+                    <div class="location-star">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Hồ Xuân Hương,Đà Lạt</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>842.857</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item DN iso-li4">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/22HOUSING.jpg" alt="">
+                    <div class="rating-point">
+                        <p>8.5</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>22HOUSING - VINHOMES METROPOLIS - One Bedroom Apartment</p>
+                    </div>
+                    <div class="location-star">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Quận Ba Đình,Hà Nội</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>842.857</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item HN iso-li5">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/METROPOLIS.jpg" alt="">
+                    <div class="rating-point">
+                        <p>8.5</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>22HOUSING - VINHOMES METROPOLIS - One Bedroom Apartment</p>
+                    </div>
+                    <div class="location-star">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Quận Ba Đình,Hà Nội</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>842.857</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item HN iso-li5">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/MOONWEST.jpg" alt="">
+                    <div class="rating-point">
+                        <p>8.5</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>22HOUSING - VINHOMES METROPOLIS - One Bedroom Apartment</p>
+                    </div>
+                    <div class="location-star">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Quận Ba Đình,Hà Nội</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>842.857</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 p-1 isotope-item HN iso-li5">
+            <a href="#">
+                <div class="img-location">
+                    <img src="~/Content/FrontEnd/img/HNSUN.jpg" alt="">
+                    <div class="rating-point">
+                        <p>8.5</p>
+                    </div>
+                </div>
+                <div class="info-location">
+                    <div class="addr-name">
+                        <p>22HOUSING - VINHOMES METROPOLIS - One Bedroom Apartment</p>
+                    </div>
+                    <div class="location-star">
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <div class="location">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <p>Quận Ba Đình,Hà Nội</p>
+                        </div>
+                    </div>
+                    <div class="cheap-price-txt">
+                        <p>Giá mỗi đêm rẻ nhất từ</p>
+                    </div>
+                    <div class="cheap-price">
+                        <p>VND<span>842.857</span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="btn-more d-flex justify-content-center mt-3">
+        <button>
+            <p>Xem thêm các chỗ nghỉ (<span class="btn-addr-name">Hồ chí Minh</span>)</p>
+        </button>
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+@section scripts{
+    <script>
+        $('select').select2();
+
+        function ConvertDate(str) {
+            if (str != undefined)
+                return str.split('/').reverse().join('-');
+            else
+                return null;
+        }
+        function GetRoom() {
+            let cateId = $('.choose-cate').children('button.active').attr('data-id');
+            let desId = $('.destination').val();
+            let start = ConvertDate($('#startdate').val().split('-')[1]);
+            let end = ConvertDate($('#enddate').val().split('-')[1])
+            let stock = $('.adultsVal').val();
+            location.href = `/Home/GetRoom?CategoryId=${cateId}&&DesId=${desId}&&Start=${start}&&End=${end}&&Stock=${stock}`;
+        }
+    </script>
+}

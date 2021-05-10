@@ -1,0 +1,176 @@
+﻿@model IEnumerable<Booking.Model.ModelView.BuildingForRentModelView>
+@{
+    ViewBag.Title = "GetRoom";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .select2-selection--single {
+        outline: none !important;
+        height: 35px !important;
+        border: 1px solid #bdbdbd !important;
+    }
+
+    .select2-selection__rendered {
+        line-height: 35px !important;
+        text-align: start;
+    }
+
+    .select2-search__field {
+        outline: none;
+    }
+</style>
+<div class="container-lg container-fluid-sm">
+    @*<nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="#">Việt Nam</a></li>
+            <li class="breadcrumb-item"><a href="#">Lâm Đồng</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Đà Lạt</li>
+        </ol>
+    </nav>*@
+    <div class="row">
+        <div class="left col-lg-3 col-sm-4 mb-5">
+            <div class="form-search p-3">
+                <h5>Tìm</h5>
+                <div class="search-box col-12 mb-2">
+                    <small>Tìm chỗ nghỉ/điểm đến</small>
+                    <select class="form-control destination">
+                        <option value="0">Bạn muốn du lịch nơi đâu</option>
+                        @foreach (var item in ViewBag.selectDestination as IEnumerable<Booking.Model.Model.DestinationPlace>)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="search-box col-12 mb-2">
+                    <small>Chọn loại phòng</small>
+                    <select class="form-control choose-cate">
+                        <option value="0">Chọn loại phòng</option>
+                        @foreach (var item in ViewBag.categoryhouse as IEnumerable<Booking.Model.Model.CategoryHouse>)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="date-arrival mb-2">
+                    <small>Ngày nhận phòng</small>
+                    <div class="date-arrival-time d-flex mt-2 px-2  py-1 justify-content-between">
+                        <label for="fromdate">
+                            <i class="far fa-calendar-check"></i>
+                        </label>
+                        <input type="text" id="startdate" placeholder="Ngày nhận phòng" autocomplete="off">
+                        <label for="fromdate">
+                            <i class="fas fa-chevron-down"></i>
+                        </label>
+                    </div>
+                </div>
+                <div class="check-out-date col-12 mb-3">
+                    <small>Ngày trả phòng</small>
+                    <div class="time-out d-flex mt-1 px-2  py-1 justify-content-between">
+                        <label for="todate">
+                            <i class="far fa-calendar-check"></i>
+                        </label>
+                        <input type="text" id="enddate" placeholder="Ngày nhận phòng" autocomplete="off">
+                        <label for="todate">
+                            <i class="fas fa-chevron-down"></i>
+                        </label>
+                    </div>
+                </div>
+                <div class="number-adult-box col-12 mb-2">
+                    <small>Chọn số lượng người/phòng</small>
+                    <input type="number" name="Stock" value="0" min="0" class="form-control" />
+                </div>
+                <div class="submit-button">
+                    <button class="sb-searchbox__button" onclick="GetRoom()">Tìm</button>
+                </div>
+            </div>
+        </div>
+       
+        <div class="right col-lg-9 col-sm-8 ps-0">
+            <h4 class="my-3 mt-0">@ViewBag.destinationName: tìm thấy <span>@Model.Count()</span> chỗ nghỉ</h4>
+            @foreach (var item in Model)
+            {
+                <div class="sr_item mb-3">
+                    <table>
+                        <tr>
+                            <td class="sr_item_legacy_photo col-lg-3 col-sm-4 col-5">
+                                <div class="img-legary">
+                                    <a href="/Home/Detail/@item.building.Id"><img src="@item.building.Image" alt="@item.building.Name"></a>
+                                </div>
+                            </td>
+                            <td class="sr_item-content col-lg-6 col-sm-8 ps-2">
+                                <div class="sr-hotel-title d-flex">
+                                    <h5>
+                                        <a href="/Home/Detail/@item.building.Id">
+                                            @item.building.Name
+                                        </a>
+                                    </h5>
+                                    @*<div class="offer-star-ratting ps-2">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>*@
+                                </div>
+                                <div class="sr-card-address-line d-lg-flex">
+                                    <a href="#">
+                                        @item.location
+                                        <span class="sr-card-address-item">
+                                            Xem trên bản đồ
+                                        </span>
+                                    </a>
+                                    <div class="res-sr-card-address">
+                                        <div class="review-score d-flex px-sm-0">
+                                            <p class="review-score-number mb-0 px-2 py-1 ">8.8</p>
+                                            <div class="review-score-description d-lg-block me-3 d-sm-flex">
+                                                <p class="txt-review-score text-end mb-0 ps-sm-2">Xuất sắc</p>
+                                                <p class="review-count mb-0 ps-sm-2">1534 nhận xét</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="hotel-desc">
+                                    @item.building.Description
+                                </p>
+                            </td>
+                            <td class="sr-item-evaluate col-lg-3 text-end">
+                                <a href="#">
+                                    <div class="review-score d-flex">
+                                        <div class="review-score-description d-block me-3">
+                                            <p class="txt-review-score text-end mb-0">Xuất sắc</p>
+                                            <p class="review-count mb-0">1534 nhận xét</p>
+                                        </div>
+                                        <p class="review-score-number mb-0 px-2 py-1">8.8</p>
+                                    </div>
+                                </a>
+                                <a href="#" class="price-display py-2 px-3">
+                                    <span>@item.price VNĐ</span>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $('select').select2();
+        function ConvertDate(str) {
+            if (str != undefined)
+                return str.split('/').reverse().join('-');
+            else
+                return null;
+        }
+        function GetRoom() {
+            let cateId = $('.choose-cate').val();
+            let desId = $('.destination').val();
+            let start = ConvertDate($('#startdate').val().split('-')[1]);
+            let end = ConvertDate($('#enddate').val().split('-')[1])
+            let stock = $('input[name=Stock]').val();
+            location.href = `/Home/GetRoom?CategoryId=${cateId}&&DesId=${desId}&&Start=${start}&&End=${end}&&Stock=${stock}`;
+        }
+    </script>
+}

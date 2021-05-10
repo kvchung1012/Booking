@@ -12,13 +12,14 @@ namespace Booking.Service.Service
     public class AdminService : IAdminService
     {
         private readonly ICommonService _commonService;
+        private readonly BookingEntities db = new BookingEntities();
         public AdminService(ICommonService commonService)
         {
             _commonService = commonService;
         }
         public async Task<bool> AddOrUpdate(Admin admin)
         {
-            var response = await _commonService.AddOrUpdate(admin);
+            var response = (await _commonService.AddOrUpdate(admin)).isSuccess;
             return response;
         }
 
@@ -54,9 +55,16 @@ namespace Booking.Service.Service
             return data.data.Where(x => x.Email == email && x.Password == password && x.Status == true).FirstOrDefault();
         }
 
-        public Task<bool> ForgotPassword(string email)
+        public async Task<bool> ForgotPassword(string email,string pass)
         {
-            throw new NotImplementedException();
+            var obj = db.Admins.Where(x => x.Email == email).FirstOrDefault();
+            if(obj != null)
+            {
+                obj.Password = pass;
+                db.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }

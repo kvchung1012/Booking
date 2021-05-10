@@ -18,7 +18,7 @@ namespace Booking.Service.Service
         }
         public async Task<bool> AddOrUpdate(Unit customer)
         {
-            var response = await _commonService.AddOrUpdate(customer);
+            var response = (await _commonService.AddOrUpdate(customer)).isSuccess;
             return response;
         }
 

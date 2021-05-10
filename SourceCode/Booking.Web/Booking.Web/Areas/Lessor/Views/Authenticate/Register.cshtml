@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
+    <meta name="author" content="Łukasz Holeczek">
+    <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
+    <title>CoreUI Free Bootstrap Admin Template</title>
+    <link rel="apple-touch-icon" sizes="60x60" href="~/Content/Admin/assets/favicon/apple-icon-60x60.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="~/Content/Admin/assets/favicon/android-icon-192x192.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    @*<meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">*@
+    <meta name="theme-color" content="#ffffff">
+    <!-- Main styles for this application-->
+    <link href="~/Content/Admin/css/style.css" rel="stylesheet">
+    <!-- Global site tag (gtag.js) - Google Analytics-->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        // Shared ID
+        gtag('config', 'UA-118965717-3');
+        // Bootstrap ID
+        gtag('config', 'UA-118965717-5');
+    </script>
+</head>
+<body>
+    <style>
+        .col-form-label {
+            color: #000;
+        }
+
+        .help-block {
+            color: #f00;
+        }
+    </style>
+    <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="card-group d-block d-md-flex row">
+                        <div class="card col-md-12 p-4 mb-0">
+                            <form class="login form-input">
+                                <div class="card-body">
+                                    <h1>Login</h1>
+                                    <p class="text-medium-emphasis">Sign In to your account</p>
+                                    <div class="row">
+                                        <div class="form-group col-12 mb-2">
+                                            <input type="hidden" name="Id" id="Id" value="0">
+                                            <label class="col-form-label">Họ và tên</label>
+                                            <div>
+                                                <input class="form-control validation" type="text" name="Name" placeholder="Nhập họ và tên">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-12 mb-2">
+                                            <label class="col-form-label">Tài Khoản</label>
+                                            <div>
+                                                <input class="form-control validation" type="text" name="UserName" placeholder="Nhập tên tài khoản">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-12 mb-2">
+                                            <label class="col-form-label">CCCD</label>
+                                            <div>
+                                                <input class="form-control validation" type="text" name="IdCard" placeholder="Căn cước công dân">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-12 mb-2">
+                                            <label class="col-form-label" for="text-input">Email</label>
+                                            <div>
+                                                <input class="form-control validation" type="email" name="Email" placeholder="Nhập email">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-12 mb-2">
+                                            <label class="col-form-label" for="text-input">Nhập số điện thoại</label>
+                                            <div>
+                                                <input class="form-control validation" type="number" name="Phone" placeholder="Nhập số điện thoại">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-12 mb-2">
+                                            <label class="col-form-label" for="text-input">Địa chỉ</label>
+                                            <div>
+                                                <input class="form-control validation" type="text" name="Address" placeholder="Nhập địa chỉ">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-12 mb-2">
+                                            <label class="col-form-label" for="text-input">Mật khẩu</label>
+                                            <div>
+                                                <input class="form-control validation" type="password" name="Password" placeholder="Nhập mật khẩu">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-12 mb-2">
+                                            <label class="col-form-label" for="text-input">Mật khẩu xác nhận</label>
+                                            <div>
+                                                <input class="form-control validation" type="password" name="ConfirmPassword" placeholder="Xác nhận mật khẩu">
+                                                <span class="help-block"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <button class="btn btn-primary px-4" onclick="Register()" type="button">Đăng ký</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CoreUI and necessary plugins-->
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Content/Admin/js/coreui.bundle.js"></script>
+    <script src="~/Content/Admin/js/svgxuse.js"></script>
+    <script src="~/Content/Admin/js/coreui-utils.js"></script>
+    <script src="~/Content/Admin/js/sweetalert.min.js"></script>
+    <script src="~/Content/Admin/js/AdminCommon.js"></script>
+
+    <script>
+        function Register() {
+            $('.help-block').css('display', 'none');
+            $('.help-block').css('display', 'none');
+            let pass = $('input[name=Password]').val();
+            let confirmPass = $('input[name=ConfirmPassword]').val();
+            if (ValidationInput()) {
+                if (pass === confirmPass) {
+                    let formArray = $('form.form-input').serializeArray();
+                    var object = {};
+                    jQuery.map(formArray, function (n, i) {
+                        object[n.name] = n.value;
+                    });
+                    $.ajax({
+                        url: '/Lessor/Authenticate/Register',
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            obj: object,
+                            confirmPass: confirmPass
+                        },
+                        success: function (res) {
+                            if (res.success) {
+                                alert('Đăng ký thành công');
+                            }
+                            else {
+                                if (res.error != null) {
+                                    $('.help-block').css('display', 'inline-block');
+                                    res.error.map(x => {
+                                        $('.form-input input[name=' + x.key + ']').siblings('.help-block').html('');
+                                        $('.form-input input[name=' + x.key + ']').siblings('.help-block').append(x.value);
+                                    })
+                                }
+                            }
+                        }
+                    })
+                }
+                else {
+                    $('input[name=ConfirmPassword]').siblings('.help-block').css('display', 'inline-block');
+                    $('input[name=ConfirmPassword]').siblings('.help-block').append('Mật khẩu xác nhận không đúng');
+                }
+            }
+            
+
+
+        }
+    </script>
+</body>
+</html>

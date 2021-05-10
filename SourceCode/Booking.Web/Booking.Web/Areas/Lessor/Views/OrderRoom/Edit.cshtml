@@ -1,0 +1,194 @@
+﻿@model Booking.Model.Model.OrderRoom
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Lessor/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Đặt phòng cho khách</h3>
+<div class="row mt-3">
+    <form class="col-md-8 row form-input form-order">
+        <div class="form-group col-md-6">
+            <label class="col-form-label">Chọn nhà nghỉ của bạn</label>
+            <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+            <select class="select-service form-control" onchange="GetRoom(this)">
+                <option value="0">Chọn nhà nghỉ của bạn</option>
+                @foreach (var item in ViewBag.building as IEnumerable<Booking.Model.Model.BuildingForRent>)
+                {
+                    <option value="@item.Id" @if (item.Id == ViewBag.room.BuildingForRentId) { <text> selected</text> }>@item.Name</option>
+                }
+            </select>
+            <span class="help-block"></span>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label class="col-form-label ">Chọn loại phòng</label>
+            <select class="select-service form-control validation select-room" name="RoomInBuildingId" onclick="ChooseRoom(this)">
+                <option value="0">Chọn loại phòng</option>
+                @foreach (var item in ViewBag.rooms as IEnumerable<Booking.Model.Model.RoomInBuilding>)
+                {
+                    <option data-price="@item.Price" value="@item.Id" @if (item.Id == Model.RoomInBuildingId) { <text> selected</text> }>@item.Name</option>
+                }
+            </select>
+            <span class="help-block"></span>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label class="col-form-label">Ngày bắt đầu</label>
+            <div>
+                <input class="form-control validation" type="date" name="StartDate" value="@Model.StartDate.Value.ToString("yyyy-MM-dd")">
+                <span class="help-block"></span>
+            </div>
+        </div>
+
+        <div class="form-group col-md-6">
+            <label class="col-form-label">Ngày kết thúc</label>
+            <div>
+                <input class="form-control validation" type="date" name="EndDate" value="@Model.EndDate.Value.ToString("yyyy-MM-dd")">
+                <span class="help-block"></span>
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            <label class="col-form-label">Số lượng</label>
+            <div>
+                <input class="form-control validation" type="number" name="Stock" value="@Model.Stock" placeholder="Số lượng phòng">
+                <span class="help-block"></span>
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            <label class="col-form-label">Đơn giá</label>
+            <div>
+                <input class="form-control" type="number" name="Price" value="@Model.Price" placeholder="Thành tiền" readonly>
+                <span class="help-block"></span>
+            </div>
+        </div>
+        <div class="col-md-12 col-form-label">
+            <div class="form-check form-check-inline mr-1">
+                <input class="form-check-input" id="inline-radio1" type="radio" value="True" name="Status" @if (Model.Status == true) { <text> checked</text> }>
+                <label class="form-check-label" for="inline-radio1">Hoạt động</label>
+            </div>
+            <div class="form-check form-check-inline mr-1">
+                <input class="form-check-input" id="inline-radio2" type="radio" value="False" name="Status" @if (Model.Status != true) { <text> checked</text> }>
+                <label class="form-check-label" for="inline-radio2">Khóa</label>
+            </div>
+        </div>
+    </form>
+
+    <form class="col-md-4 row form-input form-customer">
+        <div class="form-group col-md-12">
+            <label class="col-form-label">Nhập tên khách hàng</label>
+            <div>
+                <input class="form-control validation" type="text" name="Name" value="@ViewBag.customer.Name" placeholder="Nhập tên khách hàng">
+                <span class="help-block"></span>
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            <label class="col-form-label">Số điện thoại</label>
+            <div>
+                <input class="form-control validation" type="number" name="Phone" value="@ViewBag.customer.Phone" placeholder="Nhập số điện thoại">
+                <span class="help-block"></span>
+            </div>
+        </div>
+
+        <div class="form-group col-md-12">
+            <label class="col-form-label">Email</label>
+            <div>
+                <input class="form-control validation" type="text" name="Email" value="@ViewBag.customer.Email" placeholder="Nhập email của khách hàng">
+                <span class="help-block"></span>
+            </div>
+        </div>
+    </form>
+    <div class="col-md-8">
+        <button class="btn btn-square btn-success" onclick="AddRoom()">Cập nhật</button>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Content/Admin/js/AdminCommon.js"></script>
+    <script>
+        function GetRoom(el) {
+            let Id = $(el).val();
+            $.ajax({
+                url: '/Lessor/OrderRoom/GetRoom',
+                dataType: 'json',
+                type: 'post',
+                data: {
+                    Id: Id
+                },
+                success: function (res) {
+                    let row = `<option value="0" data-price="0">Chọn nhà nghỉ của bạn</option>`;
+                    $(res).each(function (i, e) {
+                        row += `<option value="${e.Id}" data-price="${e.Price}">${e.Name}</option>`;
+                    });
+                    $('.select-room').html('');
+                    $('.select-room').append(row);
+
+                },
+                error: function (error) {
+                    console.log(error)
+                }
+
+            })
+        }
+
+        function ChooseRoom(el) {
+            let price = $(el).children('option:selected').attr('data-price');
+            $('input[name=Price]').val(price);
+        }
+
+        function AddRoom() {
+            if (ValidationInput()) {  // kiểm tra dữ liệu đầu vào
+                // read data in form
+                let formOrder = $('form.form-order').serializeArray();
+                var order = {};
+                jQuery.map(formOrder, function (n, i) {
+                    order[n.name] = n.value;
+                });
+
+                let formCustomer = $('form.form-customer').serializeArray();
+                var customer = {};
+                jQuery.map(formCustomer, function (n, i) {
+                    customer[n.name] = n.value;
+                });
+
+                swal({
+                    title: $('#Id').val() == 0 ? "Bạn có chắc chắn muốn thêm" : "Bạn có chắc muốn sửa dữ liệu này?",
+                    text: $('#Id').val() == 0 ? "" : "Sau khi sửa thì không thể quay lại!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        // submit data
+                        $.ajax({
+                            url: '/Lessor/OrderRoom/AddOrUpdate',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                order: order,
+                                customer: customer
+                            },
+                            beforeSend: function () {
+                            },
+                            success: function (res) {
+                                if (res) {
+                                    alert("ok");
+                                }
+                                else {
+                                    alert("ko");
+                                }
+                            },
+                            error: function (error) {
+
+                            },
+                            complete: function () {
+                            }
+                        })
+                    }
+                })
+            }
+        }
+
+    </script>
+}

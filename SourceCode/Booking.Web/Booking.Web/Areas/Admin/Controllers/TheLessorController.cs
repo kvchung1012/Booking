@@ -13,7 +13,7 @@ namespace Booking.Web.Areas.Admin.Controllers
 {
     public class TheLessorController : Controller
     {
-        // GET: Admin/TheLessor
+        // GET: Admin/BuildingForRent
         private readonly ILessorService _lessorService;
         public TheLessorController(ILessorService lessorService)
         {

@@ -12,40 +12,52 @@ namespace Booking.Web.Controllers
 {
     public class HomeController : Controller
     {
-        readonly ILessorService commonService;
-        public HomeController(ILessorService commonService)
+        readonly IFrontEndService _frontEndService;
+        readonly IDestinationPlaceService _destinationPlaceService;
+        public HomeController(IFrontEndService frontEndService,IDestinationPlaceService destinationPlaceService)
         {
-            this.commonService = commonService;
+            _frontEndService = frontEndService;
+            _destinationPlaceService = destinationPlaceService;
         }
         public ActionResult Index()
         {
+            ViewBag.categoryhouse = _frontEndService.GetListCategoryHouse().Take(5).ToList();
+            ViewBag.destination = _frontEndService.GetListDestinationPlaceModelView().Take(20).ToList();
+            ViewBag.selectDestination = _frontEndService.GetListDestinationPlace().ToList();
+            ViewBag.category = _frontEndService.GetCategoryModelView().Take(4).ToList();
             return View();
         }
 
-        //[HttpPost]
-        //public async Task<JsonResult> GetObj(int Id)
-        //{
-        //    return Json(await commonService.GetObjectById<TheLessor>(Id));
-        //}
-
-        //[HttpPost]
-        //public async Task<JsonResult> Add(Unit unit)
-        //{
-        //    return Json(await commonService.AddOrUpdate<Unit>(unit));
-        //}
-
-        public ActionResult About()
+        public async Task<ActionResult> GetRoom(int? CategoryId, int? DesId, DateTime? Start, DateTime? End, int? Stock)
         {
-            ViewBag.Message = "Your application description page.";
+            var data = _frontEndService.GetRoom(CategoryId, DesId, Start, End, Stock);
+            ViewBag.selectDestination = _frontEndService.GetListDestinationPlace().ToList();
+            ViewBag.categoryhouse = _frontEndService.GetListCategoryHouse().ToList();
 
-            return View();
+            if (DesId != null && DesId != 0)
+                ViewBag.destinationName = ( await _destinationPlaceService.GetObjectById((int)DesId)).Name;
+            return View(data);
         }
 
-        public ActionResult Contact()
+        public ActionResult Detail(int Id)
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.selectDestination = _frontEndService.GetListDestinationPlace().ToList();
+            ViewBag.categoryhouse = _frontEndService.GetListCategoryHouse().ToList();
+            var obj = _frontEndService.GetBuildingForRentById(Id);
+            ViewBag.images = _frontEndService.GetBuildingForRentImages(Id);
+            ViewBag.categoryName = _frontEndService.GetCategoryHouseById((int)obj.CategoryHouseId).Name;
 
-            return View();
+            // get utilities
+            ViewBag.utilites = _frontEndService.GetUtilities(Id);
+            ViewBag.rooms = _frontEndService.GetRoomInBuildings(Id);
+            return View(obj);
+        }
+
+        [HttpPost]
+        public PartialViewResult GetInfor(int Id)
+        {
+            var data = _frontEndService.GetInforRoom(Id);
+            return PartialView(data);
         }
     }
 }

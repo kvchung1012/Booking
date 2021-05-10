@@ -19,6 +19,7 @@ namespace Booking.Model.Model
         public Nullable<int> RoomInBuildingId { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<int> Stock { get; set; }
         public Nullable<decimal> Price { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }

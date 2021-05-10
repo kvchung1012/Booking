@@ -18,9 +18,9 @@ namespace Booking.Web.Common
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = true,
-                Credentials = new NetworkCredential("khuatchung1012@gmail.com", "Chung1012@tx"),
+                Credentials = new NetworkCredential("nguyenhuyson11123@gmail.com", "0971383420"),
             };
-            var mes = new MailMessage("khuatchung1012@gmail.com", email)
+            var mes = new MailMessage("nguyenhuyson11123@gmail.com", email)
             {
                 Subject = "Send to you password of app Booking",
                 Body = "Mật khẩu mới của bạn là : " + pass,

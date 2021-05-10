@@ -274,5 +274,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="BuildingForRentUtilitis">
+      <EntityTypeMapping TypeName="BookingModel.BuildingForRentUtilitis">
+        <MappingFragment StoreEntitySet="BuildingForRentUtilitis">
+          <ScalarProperty Name="UtilitiId" ColumnName="UtilitiId" />
+          <ScalarProperty Name="BuildingForRentId" ColumnName="BuildingForRentId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

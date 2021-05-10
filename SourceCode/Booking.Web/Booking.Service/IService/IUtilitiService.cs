@@ -14,5 +14,7 @@ namespace Booking.Service.IService
         public Task<Utiliti> GetObjectById(int Id);
         public Task<bool> AddOrUpdate(Utiliti utiliti);
         public Task<bool> DeleteById(int Id);
+
+        public Task<List<UtilitiesModelView>> GetUtilities();
     }
 }

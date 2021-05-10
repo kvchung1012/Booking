@@ -406,7 +406,7 @@ function ValidationInput() {
         if ($(this).hasClass('validation')) {
             let val = $(this).val();
             if ($(this).hasClass('ckeditor') || $(this).hasClass('p-ckeditor')) {
-                val = CKEDITOR.instances[$(this).attr('id')].setData('');
+                val = CKEDITOR.instances[$(this).attr('id')].getData();
             }
             if (val == '') {
                 let label = $(this).parent().siblings('label').text();
@@ -428,6 +428,22 @@ function ChooseMainImage(el) {
         $('input[name=Image]').val(fileUrl);
     };
     finder.popup();
+}
+
+function ChooseImage() {
+    let finder = new CKFinder();
+    finder.selectActionFunction = function (fileUrl) {
+        let row = `<div class="image-item w-50">
+                            <img src="${fileUrl}" alt="Alternate Text" class="w-100 border show-image" style="object-fit:contain" />
+                            <button class="btn-danger" type="button" onclick="DeleteImage(this)"><i class="bi bi-trash"></i></button>
+                        </div>`;
+        $('.list-image > div:nth-child(1)').append(row);
+    };
+    finder.popup();
+}
+
+function DeleteImage(el) {
+    $(el).parent().remove();
 }
 
 function ConvertToSlug() {

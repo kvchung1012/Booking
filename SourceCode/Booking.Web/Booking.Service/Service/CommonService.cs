@@ -23,7 +23,7 @@ namespace Booking.Service.Service
             try
             {
                 var data = await db.Set<T>().ToListAsync();
-                data = data.Where(x => typeof(T).GetProperty("IsDeleted") != null && x.GetType().GetProperty("IsDeleted").GetValue(x, null).ToString() == false.ToString()).ToList();
+                data = data.Where(x => (typeof(T).GetProperty("IsDeleted") != null && x.GetType().GetProperty("IsDeleted").GetValue(x, null).ToString() == false.ToString()) || (typeof(T).GetProperty("IsDeleted") == null)).ToList();
                 // get total records
                 var totalRecords = data.Count();
                 // filter
@@ -31,7 +31,7 @@ namespace Booking.Service.Service
                 {
                     foreach (var filter in requestData.listFilter)
                     {
-                        data = data.Where(x => x.GetType().GetProperty(filter.key).GetValue(x).ToString().ToLower().Contains(filter.value.ToLower())).ToList();
+                        data = data.Where(x => x.GetType().GetProperty(filter.key).GetValue(x).ToString().ToLower().Equals(filter.value.ToLower())).ToList();
                     }
                     totalRecords = data.Count();
                 }
@@ -88,7 +88,7 @@ namespace Booking.Service.Service
                 return false;
             }
         }
-        public async Task<bool> AddOrUpdate<T>(T obj) where T : class
+        public async Task<ResultAdd> AddOrUpdate<T>(T obj) where T : class
         {
             try
             {
@@ -112,6 +112,7 @@ namespace Booking.Service.Service
                     }
                     DbSet.Add(obj);
                     await db.SaveChangesAsync();
+                    return new ResultAdd() { isSuccess = true, id = int.Parse(obj.GetType().GetProperty("Id").GetValue(obj).ToString()) };
                 }
                 else
                 {
@@ -135,12 +136,12 @@ namespace Booking.Service.Service
                         o.GetType().GetProperty("IsDeleted").SetValue(o, false);
                     }
                     await db.SaveChangesAsync();
+                    return new ResultAdd() { isSuccess = true, id = int.Parse(o.GetType().GetProperty("Id").GetValue(o).ToString()) };
                 }
-                return true;
             }
             catch (Exception e)
             {
-                return false;
+                return new ResultAdd() { isSuccess = false, id = 0 }; ;
             }
         }
         public async Task<bool> CheckDuplicate<T>(string Column, string Value) where T : class
@@ -158,6 +159,22 @@ namespace Booking.Service.Service
             if(Id ==0)
                 return await db.Districts.ToListAsync();
             return await db.Districts.Where(x=>x.ProvinceId == Id).ToListAsync();
+        }
+
+        public async Task<bool> InsertRange<T>(List<T> list) where T : class
+        {
+            var DbSet = db.Set<T>();
+            DbSet.AddRange(list);
+            db.SaveChanges();
+            return true;
+        }
+
+        public async Task<bool> RemoveRange<T>(List<T> list) where T : class
+        {
+            var DbSet = db.Set<T>();
+            DbSet.RemoveRange(list);
+            db.SaveChanges();
+            return true;
         }
     }
 }

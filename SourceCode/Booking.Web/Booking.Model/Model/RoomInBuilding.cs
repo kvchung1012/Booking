@@ -15,17 +15,13 @@ namespace Booking.Model.Model
     public partial class RoomInBuilding
     {
         public int Id { get; set; }
-        public Nullable<int> BuildingForRentId { get; set; }
-        public string Code { get; set; }
         public string Name { get; set; }
-        public string Image { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public Nullable<int> MinPeople { get; set; }
+        public Nullable<int> BuildingForRentId { get; set; }
         public Nullable<int> MaxPeople { get; set; }
         public Nullable<int> Acreage { get; set; }
-        public string Description { get; set; }
-        public string Content { get; set; }
-        public Nullable<int> ParentId { get; set; }
+        public Nullable<int> Stock { get; set; }
+        public Nullable<decimal> Price { get; set; }
+        public Nullable<int> OrderBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<int> CreatedBy { get; set; }

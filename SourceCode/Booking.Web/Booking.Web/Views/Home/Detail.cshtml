@@ -1,0 +1,493 @@
+﻿@model Booking.Model.Model.BuildingForRent
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var images = ViewBag.images as IEnumerable<Booking.Model.Model.BuildingForRentImage>;
+}
+<style>
+    .rooms-table-nodates-tr td {
+        width: 100px;
+    }
+
+        .rooms-table-nodates-tr td:first-child {
+            width: 300px !important;
+        }
+</style>
+<div class="container-lg container-fluid-sm">
+    @*<nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="#">Việt Nam</a></li>
+                <li class="breadcrumb-item"><a href="detail.html">Lâm Đồng</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Đà Lạt</li>
+            </ol>
+        </nav>*@
+    <div class="row">
+        <div class="left col-lg-3 col-sm-4 mb-5">
+            <div class="form-search p-3">
+                <h5>Tìm</h5>
+                <div class="search-box col-12 mb-2">
+                    <small>Tìm chỗ nghỉ/điểm đến</small>
+                    <select class="form-control destination">
+                        <option value="0">Bạn muốn du lịch nơi đâu</option>
+                        @foreach (var item in ViewBag.selectDestination as IEnumerable<Booking.Model.Model.DestinationPlace>)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="search-box col-12 mb-2">
+                    <small>Chọn loại phòng</small>
+                    <select class="form-control choose-cate">
+                        <option value="">Chọn loại phòng</option>
+                        @foreach (var item in ViewBag.categoryhouse as IEnumerable<Booking.Model.Model.CategoryHouse>)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="date-arrival mb-2">
+                    <small>Ngày nhận phòng</small>
+                    <div class="date-arrival-time d-flex mt-2 px-2  py-1 justify-content-between">
+                        <label for="fromdate">
+                            <i class="far fa-calendar-check"></i>
+                        </label>
+                        <input type="text" id="startdate" placeholder="Ngày nhận phòng" autocomplete="off">
+                        <label for="fromdate">
+                            <i class="fas fa-chevron-down"></i>
+                        </label>
+                    </div>
+                </div>
+                <div class="check-out-date col-12 mb-3">
+                    <small>Ngày trả phòng</small>
+                    <div class="time-out d-flex mt-1 px-2  py-1 justify-content-between">
+                        <label for="todate">
+                            <i class="far fa-calendar-check"></i>
+                        </label>
+                        <input type="text" id="enddate" placeholder="Ngày nhận phòng" autocomplete="off">
+                        <label for="todate">
+                            <i class="fas fa-chevron-down"></i>
+                        </label>
+                    </div>
+                </div>
+                <div class="number-adult-box col-12 mb-2">
+                    <small>Chọn số lượng người/phòng</small>
+                    <input type="number" name="Stock" value="0" min="0" class="form-control" />
+                </div>
+                <div class="submit-button">
+                    <button class="sb-searchbox__button" onclick="GetRoom()">Tìm</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="right col-lg-9 col-sm-8 ps-0 mb-5">
+            <div class="hp-bar">
+                <ul>
+                    <li class="li-info-price">
+                        <a href="#">Thông tin & giá</a>
+                    </li>
+                    <li class="li-utilities">
+                        <a href="#" class="btn-utilities">Tiện nghi</a>
+                    </li>
+                    <li class="li-general-rules">
+                        <a href="#">Quy tắc chung</a>
+                    </li>
+                    <li class="li-guest-reviews">
+                        <a href="#">Đánh giá của khách( <span>933</span> )</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="hotel-name d-flex">
+                <small>@ViewBag.categoryName</small>
+                <h4>@Model.Name</h4>
+                <div class="btn-heart-book-now">
+                    <button class="btn-heart"><i class="far fa-heart"></i></button>
+                    <button class="btn-book-now" title="Xem giá và phòng trống"><span>Đặt ngay</span></button>
+                </div>
+            </div>
+
+            <div class="img-hotel container-fluid p-0">
+                <div class="row m-0">
+                    @if (images.Count() >= 3)
+                    {
+                        <div class="col-4 p-1">
+                            @if (images.ElementAt(1) != null)
+                            {
+                                <div class="img-hotel-item1">
+                                    <a href="#" class="btn-addwish-b2">
+                                        <img src="@images.ElementAt(1).Image" alt="">
+                                    </a>
+                                </div>
+                            }
+
+                            @if (images.ElementAt(2) != null)
+                            {
+                                <div class="img-hotel-item2">
+                                    <a href="#" class="btn-addwish-b2">
+                                        <img src="@images.ElementAt(2).Image" alt="">
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                        if (images.ElementAt(3) != null)
+                        {
+                            <div class="col-8 p-1 img-hotel-item3">
+                                <a href="#" class="btn-addwish-b2">
+                                    <img src="@images.ElementAt(3).Image" alt="">
+                                </a>
+                            </div>
+                        }
+                    }
+
+                </div>
+                <div class="row img-hotel-child m-0">
+                    @foreach (var item in images.Take(4))
+                    {
+                        <div class="col-3 p-1">
+                            <a href="" class="btn-addwish-b2">
+                                <img src="@item.Image" alt="">
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="hp-hotel-description-hightlights">
+                <div class="row">
+                    <div class="col-8 pe-3">
+                        @Html.Raw(Model.Content)
+                    </div>
+                    <div class="col-4">
+                        <div class="property-highlights">
+                            <p>
+                                <b>Liên hệ với chúng tôi</b>
+                            </p>
+                            <p>
+                                <b>Số điện thoại</b>: @Model.Phone
+                            </p>
+                            <p>
+                                <b>Địa chỉ</b>: @Model.Address
+                            </p>
+                            <p>
+                                <b>Mô tả: </b>
+                                @Model.Description
+                            </p>
+                            <button class="bui-button btn-book-now"><span>Đặt ngay</span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="bui-alert">
+                    <i class="fas fa-unlock-alt"></i>
+                    <div class="bui-alert-description">
+                        <span class="bui-alert-title">Giữ giá tốt cho kỳ nghỉ sắp tới của bạn</span>
+                        <p>Xác nhận tức thời và hủy MIỄN PHÍ đối với hầu hết tất cả các phòng!</p>
+                    </div>
+                </div>
+                <div class="hp-availability-section">
+                    <div class="hp-section-header d-flex justify-content-between">
+                        <h5>Danh sách các phòng của chúng tôi</h5>
+                        <div class="hp-no-availability d-flex">
+                            <i class="fas fa-check pt-1 pe-2"></i>
+                            <i>Chúng tôi luôn khớp giá!</i>
+                        </div>
+                    </div>
+                    <div class="rooms-table-nodates">
+                        <table>
+                            <tr style="text-align:center">
+                                <td class="col-4 pt-2 ps-2">
+                                    <span>Loại phòng</span>
+                                </td>
+                                <td class="col-2 pt-2 ps-2">
+                                    <span>Thông tin cơ bản</span>
+                                </td>
+                                <td class="col-2 pt-2 ps-2">
+                                    <span>Giá/Ngày</span>
+                                </td>
+                                <td class="col-2 pt-2 ps-2">
+                                    <span>Số lượng</span>
+                                </td>
+                                <td class="col-2 pt-2 ps-2">
+                                    <span>Chi tiết</span>
+                                </td>
+                            </tr>
+
+                            @foreach (var item in ViewBag.rooms as IEnumerable<Booking.Model.ModelView.RoomInBuildingModelView>)
+                            {
+                                <tr class="rooms-table-nodates-tr" style="text-align:center">
+                                    <td>
+                                        <p>
+                                            @item.roomInBuilding.Name
+                                        </p>
+                                        <div>
+                                            @foreach (var img in item.images.Take(3))
+                                            {
+                                                <img src="@img.Image" alt="Alternate Text" class="w-100" />
+                                            }
+                                        </div>
+                                    </td>
+                                    <td class="room-type">
+                                        <p class="">
+                                            Phù hợp: @item.roomInBuilding.MaxPeople người
+                                        </p>
+                                        <p class="">
+                                            Diện tích : @item.roomInBuilding.Acreage m<small>2</small>
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <span class="price-room" id="price-room-1">@item.roomInBuilding.Price</span><span> VND</span>
+                                    </td>
+                                    <td>
+                                        @item.roomInBuilding.Stock
+                                    </td>
+                                    <td>
+                                        <button class="btn-order" onclick="GetInfor(@item.roomInBuilding.Id)">Chi tiết</button>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                    <div class="evaluate-guest">
+                        <h4>Đánh giá của khách</h4>
+                        <div class="review-evaluate-score d-flex">
+                            <p class="review-score-number mb-0 px-2 py-1 me-2">8.8</p>
+                            <div class="review-score-description d-flex me-3">
+                                <p class="txt-review-score text-end mb-0 me-3">Xuất sắc</p>
+                                <p class="review-count mb-0"><span>933</span> đánh giá</p>
+                            </div>
+                        </div>
+                        <h6>Đọc xem khách yêu thích điều gì nhất</h6>
+                        <div class="bui-carousel">
+                            <div class="bui-carousel-item" data-index="1">
+                                <div class="review-snippet-guest d-flex">
+                                    <div class="img-guest">
+                                        <img src="~/Content/Upload/product/DaLat.jpg" alt="">
+                                    </div>
+                                    <p class="guest-name">Anh</p>
+                                </div>
+                                <div class="c-review-row">
+                                    <p class="content-guest">“Khách sạn mới, sạch sẽ, giá tốt. Nhân viên thân thiện!!!”</p>
+                                </div>
+                            </div>
+                            <div class="bui-carousel-item" data-index="2">
+                                <div class="review-snippet-guest d-flex">
+                                    <div class="img-guest">
+                                        <img src="~/Content/Upload/product/DaLat.jpg" alt="">
+                                    </div>
+                                    <p class="guest-name">Anh</p>
+                                </div>
+                                <div class="c-review-row">
+                                    <p class="content-guest">“Sau khi nhận phòng đặt trên bking thấy chật thì mình muốn đặt phòng khác, nv giúp mình chọn phòng khác và tính giá cũng mềm. Nv nhiệt tình, vui vẻ. ”</p>
+                                </div>
+                            </div>
+                            <div class="bui-carousel-item" data-index="3">
+                                <div class="review-snippet-guest d-flex">
+                                    <div class="img-guest">
+                                        <img src="~/Content/Upload/product/DaLat.jpg" alt="">
+                                    </div>
+                                    <p class="guest-name">Anh</p>
+                                </div>
+                                <div class="c-review-row">
+                                    <p class="content-guest">“Khách sạn mới, sạch sẽ, giá tốt. Nhân viên thân thiện!!!”</p>
+                                </div>
+                            </div>
+                            <div class="bui-carousel-item" data-index="4">
+                                <div class="review-snippet-guest d-flex">
+                                    <div class="img-guest">
+                                        <img src="~/Content/Upload/product/DaLat.jpg" alt="">
+                                    </div>
+                                    <p class="guest-name">Anh</p>
+                                </div>
+                                <div class="c-review-row">
+                                    <p class="content-guest">“Khách sạn mới, sạch sẽ, giá tốt. Nhân viên thân thiện!!!”</p>
+                                </div>
+                            </div>
+                            <div class="bui-carousel-item" data-index="5">
+                                <div class="review-snippet-guest d-flex">
+                                    <div class="img-guest">
+                                        <img src="~/Content/Upload/product/DaLat.jpg" alt="">
+                                    </div>
+                                    <p class="guest-name">Anh</p>
+                                </div>
+                                <div class="c-review-row">
+                                    <p class="content-guest">“Khách sạn mới, sạch sẽ, giá tốt. Nhân viên thân thiện!!!”</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrap-modal1 js-modal1 p-t-60 p-b-20">
+    <div class="overlay-modal1 js-hide-modal1"></div>
+    <div class="list-img-hotel">
+        <div class="container-fluid">
+            <div class="bg0 p-t-60 p-b-30 p-lr-15-lg how-pos3-parent">
+                <div class="how-pos3 d-flex justify-content-between">
+                    <div></div>
+                    <div class="name-stars-rating d-flex">
+                        <h5 class="name-hotel">@Model.Name</h5>
+                    </div>
+                    <button class="trans-04 js-hide-modal1">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="row img-hotel-parent-modal">
+                    <div class="col-1">
+                    </div>
+                    <div class="col-10 img-hotel-modal slider-for">
+                        @foreach (var item in images)
+                        {
+                            <img src="@item.Image" alt="">
+                        }
+                    </div>
+                    <div class="col-1">
+                    </div>
+                </div>
+                <div class="row img-hotel-child-modal slider-nav">
+                    @foreach (var item in images)
+                    {
+                        <div class="col-2 img-hotel-child-item">
+                            <img src="@item.Image" alt="">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrap-modal2">
+    <div class="overlay-modal2"></div>
+    <div class="facilities">
+        <div class="btn-close-fac">
+            <button><i class="fas fa-times"></i></button>
+        </div>
+        <div class="container-fluid">
+            <div class="hotel-facilities">
+                <p class="hotel-facilities-title">Các tiện nghi của @Model.Name</p>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    @foreach (var item in ViewBag.utilites as IEnumerable<Booking.Model.ModelView.UtilitiesModelView>)
+                    {
+                        <div class="facilitiesChecklistSection row">
+                            <div class="col-4">
+                                <p><i class="fas fa-fan"></i> @item.utiliti.Name</p>
+                            </div>
+                            <div class="col-8">
+                                @foreach (var child in item.utilities)
+                                {
+                                    <span><i class="far fa-check-circle"></i> @child.Name <span class="surcharge">@child.SubName</span> </span>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Thông tin chi tiết phòng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="height:70vh">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $('.bui-carousel').slick({
+            infinite: false,
+            speed: 300,
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
+                    dots: true
+                }
+            }, {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
+            }, {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+                // You can unslick at a given breakpoint now by adding:
+                // settings: "unslick "
+                // instead of a settings object
+            ]
+        });
+        $('.slider-for').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            asNavFor: '.slider-nav'
+        });
+        $('.slider-nav').slick({
+            slidesToShow: 5,
+            slidesToScroll: 1,
+            asNavFor: '.slider-for',
+            dots: true,
+            centerMode: true,
+            focusOnSelect: true
+        });
+    </script>
+    <script>
+        function GetInfor(Id) {
+            $.ajax({
+                url: '/Home/GetInfor',
+                dataType: 'html',
+                type: 'post',
+                data: {
+                    Id: Id
+                },
+                success: function (res) {
+                    console.log(res);
+                    $('.modal-body').html('');
+                    $('.modal-body').append(res);
+                    $('.modal').modal('show')
+                }
+            })
+        }
+    </script>
+
+    <script>
+        $('select').select2();
+        function ConvertDate(str) {
+            return str.split('/').reverse().join('-');
+        }
+        function GetRoom() {
+            let cateId = $('.choose-cate').val();
+            let desId = $('.destination').val();
+            console.log($('#startdate').val());
+            let start = $('#startdate').val() == undefined ? ConvertDate($('#startdate').val().split('-')[1]) : null;
+            let end = $('#enddate').val() == undefined ? ConvertDate($('#enddate').val().split('-')[1]) : null;
+            let stock = $('input[name=Stock]').val();
+            location.href = `/Home/GetRoom?CategoryId=${cateId}&&DesId=${desId}&&Start=${start}&&End=${end}&&Stock=${stock}`;
+        }
+    </script>
+
+}

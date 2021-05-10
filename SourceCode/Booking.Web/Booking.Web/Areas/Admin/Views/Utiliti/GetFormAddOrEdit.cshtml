@@ -7,7 +7,7 @@
                 <div class="form-group col-md-4">
                     <input type="hidden" name="Id" id="Id" value="0">
                     <input type="hidden" name="ParentId" value="@ViewBag.parentId">
-                    <label class="col-form-label">Tên</label>
+                    <label class="col-form-label">Tiêu đề</label>
                     <div>
                         <input class="form-control validation" type="text" name="Name" placeholder="Nhập tiêu đề">
                         <span class="help-block"></span>
@@ -17,7 +17,7 @@
                 <div class="form-group col-md-4">
                     <label class="col-form-label">Tên phụ</label>
                     <div>
-                        <input class="form-control validation" type="text" name="SubName" placeholder="Nhập tiêu đề">
+                        <input class="form-control" type="text" name="SubName" placeholder="Nhập tiêu đề">
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -48,7 +48,7 @@ else
                 <div class="form-group col-md-4">
                     <input type="hidden" name="Id" id="Id" value="@Model.Id">
                     <input type="hidden" name="ParentId" id="Id" value="@ViewBag.parentId">
-                    <label class="col-form-label">Họ và tên</label>
+                    <label class="col-form-label">Tiêu đề phụ</label>
                     <div>
                         <input class="form-control validation" value="@Model.Name" type="text" name="Name" placeholder="Nhập tiêu đề">
                         <span class="help-block"></span>
@@ -56,9 +56,9 @@ else
                 </div>
 
                 <div class="form-group col-md-4">
-                    <label class="col-form-label">Tài Khoản</label>
+                    <label class="col-form-label">Tiêu đề phụ</label>
                     <div>
-                        <input class="form-control validation" value="@Model.SubName" type="text" name="SubName" placeholder="Nhập tiêu đề phụ">
+                        <input class="form-control" value="@Model.SubName" type="text" name="SubName" placeholder="Nhập tiêu đề phụ">
                         <span class="help-block"></span>
                     </div>
                 </div>

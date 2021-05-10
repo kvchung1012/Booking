@@ -26,6 +26,10 @@ namespace Booking.Web
             container.RegisterType<IUnitService, UnitService>();
             container.RegisterType<IItemInRoomService, ItemInRoomService>();
             container.RegisterType<IUtilitiService, UtilitiService>();
+            container.RegisterType<IBuildingForRentService, BuildingForRentService>();
+            container.RegisterType<IRoomInBuildingService, RoomInBuildingService>();
+            container.RegisterType<IOrderRoomService, OrderRoomService>();
+            container.RegisterType<IFrontEndService, FrontEndService>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

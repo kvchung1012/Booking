@@ -17,7 +17,7 @@
                     <label class="col-form-label">Chọn đơn vị</label>
                     <div>
                         <select class="form-control validation" name="UnitId">
-                            <option value="0">---Chọn thành phố/tỉnh---</option>
+                            <option value="0">Loại đơn vị</option>
                             @foreach (var item in ViewBag.unit as IEnumerable<Booking.Model.Model.Unit>)
                             {
                                 <option value="@item.Id">@item.Name</option>
@@ -64,7 +64,7 @@ else
                     <label class="col-form-label">Chọn đơn vị</label>
                     <div>
                         <select class="form-control validation" name="UnitId">
-                            <option value="0">---Chọn thành phố/tỉnh---</option>
+                            <option value="0">Loại đơn vị</option>
                             @foreach (var item in ViewBag.unit as IEnumerable<Booking.Model.Model.Unit>)
                             {
                                 <option value="@item.Id" @if (item.Id == Model.UnitId) {<text>selected</text> }>@item.Name</option>

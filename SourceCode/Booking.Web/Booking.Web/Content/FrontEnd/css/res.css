@@ -1,0 +1,217 @@
+@media only screen and (min-width: 1200px) {
+    .header-res {
+        display: none;
+    }
+}
+
+@media only screen and (min-width:1024px) and (max-width: 1200px) {
+    .btn-go-in span {
+        font-size: 0.8rem;
+    }
+    .btn-create span {
+        font-size: 0.8rem;
+    }
+    .btn-nav-bar i {
+        font-size: 1.2rem;
+    }
+}
+
+@media only screen and (min-width:600px)and (max-width:1024px) {
+    header {
+        margin: 10px 0;
+    }
+    .left-header img {
+        margin-left: 15px;
+    }
+    .left-header ul {
+        display: none;
+    }
+    .btn-go-in {
+        display: none;
+    }
+    .btn-create {
+        display: none;
+    }
+    .btn-nav-bar {
+        display: none;
+    }
+    .img-banner {
+        display: none;
+    }
+    .main {
+        background-image: url(/img/bg-agoda.png);
+        background-size: cover;
+        margin-bottom: 150px;
+    }
+    .title-containner {
+        top: 110px;
+    }
+    .category {
+        font-size: 0.9rem;
+    }
+    .category h6 {
+        font-size: 0.9rem;
+    }
+    /* */
+    .price-display {
+        position: absolute;
+        top: 50%;
+        right: 0;
+    }
+    .menubar a span {
+        font-size: 0.9rem;
+    }
+    .sr-item-evaluate {
+        display: none;
+    }
+    .res-sr-card-address {
+        display: block;
+    }
+    .res-sr-card-address .review-score {
+        position: relative !important;
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+    .res-sr-card-address .review-score .txt-review-score {
+        padding-top: 2px;
+        color: #5392f9;
+    }
+    .res-sr-card-address .review-score .review-count {
+        padding-top: 3px;
+    }
+    .navBtn {
+        display: block;
+    }
+    .navMobile {
+        display: block;
+    }
+}
+
+@media only screen and (min-width:320px)and (max-width:480px) {
+    header {
+        margin: 10px 0;
+    }
+    .left-header img {
+        margin-left: 15px;
+    }
+    .left-header ul {
+        display: none;
+    }
+    .btn-go-in {
+        display: none;
+    }
+    .btn-create {
+        display: none;
+    }
+    .btn-nav-bar {
+        display: none;
+    }
+    .img-banner {
+        display: none;
+    }
+    .main {
+        background-image: url(/img/bg-agoda.png);
+        background-size: cover;
+        margin-bottom: 150px;
+    }
+    .title-containner {
+        top: 70px;
+    }
+    .title-containner h4 {
+        font-size: 1.2rem;
+    }
+    .title-containner h5 {
+        font-size: 1rem;
+    }
+    .form-category {
+        padding: 10px 10px;
+    }
+    .search-addr {
+        padding: 3px 10px;
+    }
+    .search-addr button {
+        width: 20%;
+    }
+    .btn-ht-location {
+        display: none;
+    }
+    .search-addr button i {
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+    }
+    .search-addr input {
+        font-size: 0.9rem;
+    }
+    .check-in {
+        padding: 3px 10px;
+    }
+    .check-out {
+        padding: 3px 10px;
+    }
+    .category {
+        font-size: 0.9rem;
+    }
+    .category h6 {
+        font-size: 0.9rem;
+    }
+    /* */
+    .price-display {
+        position: absolute;
+        top: 50%;
+        right: 0;
+    }
+    .menubar a span {
+        font-size: 0.9rem;
+    }
+    .sr-item-evaluate {
+        display: none;
+    }
+    .res-sr-card-address {
+        display: block;
+    }
+    .res-sr-card-address .review-score {
+        position: relative !important;
+        height: 100%;
+        left: 0;
+        top: 0;
+    }
+    .res-sr-card-address .review-score .txt-review-score {
+        padding-top: 2px;
+        color: #5392f9;
+    }
+    .res-sr-card-address .review-score .review-count {
+        padding-top: 3px;
+    }
+    .navBtn {
+        display: block;
+    }
+    .navMobile {
+        display: block;
+    }
+    .res-log-in {
+        height: 50px !important;
+        font-size: 0.8rem;
+    }
+    .res-create {
+        height: 50px;
+        font-size: 0.8rem;
+    }
+    /**/
+    .sort-bar {
+        display: none;
+    }
+    .filter {
+        display: none;
+    }
+    .hotel-desc {
+        display: none;
+    }
+    .sr-hotel-title h5 {
+        font-size: 0.95rem;
+        width: 70%;
+    }
+    .offer-star-ratting i {
+        font-size: 0.6rem;
+    }
+}

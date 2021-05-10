@@ -15,14 +15,8 @@ namespace Booking.Model.Model
     public partial class RoomInBuildingItem
     {
         public int Id { get; set; }
-        public Nullable<int> RoomBuildingId { get; set; }
+        public Nullable<int> RoomInBuildingId { get; set; }
         public Nullable<int> ItemId { get; set; }
         public Nullable<int> Stock { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public Nullable<int> CreatedBy { get; set; }
-        public Nullable<int> UpdatedBy { get; set; }
-        public Nullable<bool> Status { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
     }
 }

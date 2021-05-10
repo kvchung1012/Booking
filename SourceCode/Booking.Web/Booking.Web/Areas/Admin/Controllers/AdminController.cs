@@ -20,7 +20,7 @@ namespace Booking.Web.Areas.Admin.Controllers
         private readonly ICommonService _commonService;
 
         #region Contructor
-        public AdminController(IAdminService adminService,ICommonService commonService)
+        public AdminController(IAdminService adminService, ICommonService commonService)
         {
             _adminService = adminService;
             _commonService = commonService;
@@ -95,6 +95,25 @@ namespace Booking.Web.Areas.Admin.Controllers
             return View(user);
         }
 
+
+        public ActionResult ForgotPasswod()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> ForGot(string email)
+        {
+            var random = EncryptAndDecrypt.GenarateRandomString();
+            var pass = Common.EncryptAndDecrypt.Encrypt(random);
+            var obj = await _adminService.ForgotPassword(email, pass);
+            if (obj == true)
+            {
+                Common.MailService.SendEmail(email, random);
+                return Json(true);
+            }
+            return Json(false);
+        }
         #endregion
 
         #region Function
@@ -146,7 +165,7 @@ namespace Booking.Web.Areas.Admin.Controllers
         {
             // check duplicate
             List<ListError> listErrors = new List<ListError>();
-            if(await _commonService.CheckDuplicate<Booking.Model.Model.Admin>("Email", obj.Email))
+            if (await _commonService.CheckDuplicate<Booking.Model.Model.Admin>("Email", obj.Email))
             {
                 ListError error = new ListError()
                 {
@@ -175,7 +194,7 @@ namespace Booking.Web.Areas.Admin.Controllers
             }
             if (listErrors.Count() > 0)
             {
-                return Json(new ResultData() { success = false, error =listErrors });
+                return Json(new ResultData() { success = false, error = listErrors });
             }
             if (obj.Id == 0)
             {
@@ -184,7 +203,7 @@ namespace Booking.Web.Areas.Admin.Controllers
                 MailService.SendEmail(obj.Email, pass);
             }
             var response = await _adminService.AddOrUpdate(obj);
-            return Json(new ResultData() {success = response,error = null });
+            return Json(new ResultData() { success = response, error = null });
         }
 
         [HttpPost]

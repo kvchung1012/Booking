@@ -19,7 +19,7 @@ namespace Booking.Service.Service
         }
         public async Task<bool> AddOrUpdate(TheLessor lessor)
         {
-            var response = await _commonService.AddOrUpdate(lessor);
+            var response = (await _commonService.AddOrUpdate(lessor)).isSuccess;
             return response;
         }
 
@@ -39,6 +39,24 @@ namespace Booking.Service.Service
         {
             var response = await _commonService.GetObjectById<TheLessor>(Id);
             return response;
+        }
+        public async Task<TheLessor> Login(string email, string password)
+        {
+            var request = new RequestData()
+            {
+                listFilter = null,
+                isAsc = true,
+                orderBy = "",
+                pageNumber = 0,
+                pageSize = 1
+            };
+            var data = await _commonService.GetListData<TheLessor>(request);
+            return data.data.Where(x => x.Email == email && x.Password == password && x.Status == true).FirstOrDefault();
+        }
+
+        public Task<bool> ForgotPassword(string email)
+        {
+            throw new NotImplementedException();
         }
     }
 }

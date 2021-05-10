@@ -14,5 +14,7 @@ namespace Booking.Service.IService
         public Task<TheLessor> GetObjectById(int Id);
         public Task<bool> AddOrUpdate(TheLessor theLessor);
         public Task<bool> DeleteById(int Id);
+        public Task<TheLessor> Login(string email, string password);
+        public Task<bool> ForgotPassword(string email);
     }
 }

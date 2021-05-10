@@ -223,6 +223,7 @@
     <EntitySet Name="Districts" EntityType="BookingModel.District" />
     <EntitySet Name="Provinces" EntityType="BookingModel.Province" />
     <EntitySet Name="DestinationPlaces" EntityType="BookingModel.DestinationPlace" />
+    <EntitySet Name="BuildingForRentUtilitis" EntityType="BookingModel.BuildingForRentUtilitis" />
   </EntityContainer>
   <EntityType Name="Admin">
     <Key>
@@ -231,7 +232,7 @@
     <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="UserName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-    <Property Name="Password" Type="String" MaxLength="64" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
     <Property Name="Email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
     <Property Name="Phone" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
@@ -274,5 +275,13 @@
     <Property Name="UpdatedBy" Type="Int32" />
     <Property Name="Status" Type="Boolean" />
     <Property Name="IsDeleted" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="BuildingForRentUtilitis">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BuildingForRentId" Type="Int32" />
+    <Property Name="UtilitiId" Type="Int32" />
   </EntityType>
 </Schema>
